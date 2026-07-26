@@ -10,6 +10,7 @@ export function useMeQuery(): UseQueryResult<AuthUser | null, Error> {
     return useQuery({
         queryKey: meQueryKey,
         queryFn: async () => {
+           
             const result = await api.get<AuthUser | null>("/api/user/me");
             return result.data;
         },
@@ -20,7 +21,7 @@ export function useMeQuery(): UseQueryResult<AuthUser | null, Error> {
                 return false;
             }
 
-            return failureCount < 2;
+            return failureCount < 1;
         },
     })
 }
