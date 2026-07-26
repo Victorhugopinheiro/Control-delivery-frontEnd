@@ -17,9 +17,6 @@ const api = axios.create({
 api.interceptors.response.use(
     (response) => response,
     async (error) => {
-        const status = error?.response?.status;
-        const original = error?.config;
-        const url = String(original.url || "");
         if (error.response?.status === 401) {
 
             console.warn('Unauthorized! Redirecting...');

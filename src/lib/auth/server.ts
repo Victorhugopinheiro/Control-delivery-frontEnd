@@ -4,6 +4,8 @@ import { headers } from "next/headers";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { authApiConfig, buildAuthUrl } from "@/lib/auth/config";
+import api from "../apiClient";
+import apiPrivate from "../apiPrivate";
 
 function normalizeUrl(baseUrl: string): string {
   return baseUrl.endsWith("/") ? baseUrl.slice(0, -1) : baseUrl;
@@ -33,18 +35,16 @@ export async function hasAuthCookie(): Promise<boolean> {
   );
 }
 
-async function hasValidSession(): Promise<boolean> {
+async function hasValidSessionPublic(): Promise<boolean> {
   const cookieStore = await cookies();
 
   const accessToken = cookieStore.get("accessToken")?.value;
   const refreshToken = cookieStore.get("refreshToken")?.value;
 
-  // Require at least one token to attempt validation
+
   if (!accessToken && !refreshToken) {
     return false;
   }
-
-
 
   // Build a minimal Cookie header with only auth cookies
   const authCookies = [
@@ -61,19 +61,71 @@ async function hasValidSession(): Promise<boolean> {
       ? meUrl
       : `${baseUrl}${meUrl}`;
 
-  const response = await fetch(requestUrl, {
-    method: "GET",
-    headers: {
-      Cookie: authCookies,
-    },
-    cache: "no-store",
-  });
 
-  return response.ok;
+  try {
+    const response = await api.get(requestUrl, {
+      headers: {
+        Cookie: authCookies,
+      },
+      validateStatus: () => true,
+    });
+
+
+    return response.status === 200;
+  } catch {
+    return false;
+  }
 }
 
+
+
+
+async function hasValidSessionPrivate(): Promise<boolean> {
+  const cookieStore = await cookies();
+
+  const accessToken = cookieStore.get("accessToken")?.value;
+  const refreshToken = cookieStore.get("refreshToken")?.value;
+
+
+  if (!accessToken && !refreshToken) {
+    return false;
+  }
+
+  // Build a minimal Cookie header with only auth cookies
+  const authCookies = [
+    accessToken ? `accessToken=${encodeURIComponent(accessToken)}` : null,
+    refreshToken ? `refreshToken=${encodeURIComponent(refreshToken)}` : null,
+  ]
+    .filter(Boolean)
+    .join("; ");
+
+  const baseUrl = await resolveServerBaseUrl();
+  const meUrl = buildAuthUrl(authApiConfig.mePath);
+  const requestUrl =
+    meUrl.startsWith("http://") || meUrl.startsWith("https://")
+      ? meUrl
+      : `${baseUrl}${meUrl}`;
+
+
+  try {
+    const response = await apiPrivate.get(requestUrl, {
+      headers: {
+        Cookie: authCookies,
+      },
+      validateStatus: () => true,
+    });
+
+
+    return response.status === 200;
+  } catch {
+    return false;
+  }
+}
+
+
+
 export async function requireAuth(): Promise<void> {
-  const authenticated = await hasValidSession();
+  const authenticated = await hasValidSessionPrivate();
 
   if (!authenticated) {
     redirect("/login");
@@ -81,7 +133,7 @@ export async function requireAuth(): Promise<void> {
 }
 
 export async function redirectIfAuthenticated(): Promise<void> {
-  const authenticated = await hasValidSession();
+  const authenticated = await hasValidSessionPublic();
 
   if (authenticated) {
     redirect("/dashboard");
