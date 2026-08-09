@@ -4,9 +4,11 @@ import { useState } from "react";
 import UserPicture from "../../../../public/UserPicture.png"
 interface ChangeImageProps {
     setImage: (image: File | null) => void;
+    userImage?: string | null;
+    disabled?: boolean;
 }
 
-export function ChangeImage({ setImage }: ChangeImageProps) {
+export function ChangeImage({ setImage, userImage, disabled }: ChangeImageProps) {
 
 
 
@@ -42,6 +44,7 @@ export function ChangeImage({ setImage }: ChangeImageProps) {
                 </span>
 
                 <input
+                    disabled={disabled}
                     type="file"
                     accept="image/*"
                     onChange={handleImageChange}
@@ -51,7 +54,9 @@ export function ChangeImage({ setImage }: ChangeImageProps) {
 
             {preview ? (
                 <Image className="rounded-full absolute z-1  w-full h-48 object-cover" src={preview} alt="Avatar user" fill priority />
-            ) : (<Image className="rounded-full absolute z-1  w-full h-48 object-cover" src={UserPicture} alt="Avatar user" fill priority />)}
+            ) : userImage ? (<Image className="rounded-full absolute z-1  w-full h-48 object-cover" src={userImage} alt="Avatar user" fill priority />) :
+
+                (<Image className="rounded-full absolute z-1  w-full h-48 object-cover" src={UserPicture} alt="Avatar user" fill priority />)}
 
 
 
