@@ -8,8 +8,10 @@ export interface WorkerDeliveryRaw {
 }
 
 export interface ListWorkerDeliveriesApiResponse {
-    deliveries: WorkerDeliveryRaw[]
+    employees: WorkerDeliveryRaw[]
 }
+
+
 
 export interface ListWorkerDeliveriesParams {
     workerId: string
@@ -34,7 +36,7 @@ export function mapWorkerDeliveriesResponse(
     payload: ListWorkerDeliveriesApiResponse,
 ): ListWorkerDeliveriesResponse {
     return {
-        deliveries: payload.deliveries.map((delivery) => ({
+        deliveries: payload.employees.map((delivery) => ({
             ...delivery,
             createdAt: new Date(delivery.createdAt),
             date: new Date(delivery.date),
