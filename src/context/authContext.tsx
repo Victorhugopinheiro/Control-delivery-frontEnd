@@ -3,15 +3,17 @@ import {
     createContext,
     ReactNode,
     useContext,
+    useEffect,
+    useState,
 } from "react";
 import { useLoginMutation, } from "@/hooks/loginHook";
 import { useLogoutMutation } from "@/hooks/logoutHook";
 import { useMeQuery } from "@/hooks/useMeQuery";
 import { AuthStatus, AuthUser } from "@/lib/auth/types";
-
+import { useMemo } from "react";
 
 interface AuthContextType {
-    user: AuthUser | null;
+    user: (AuthUser | null)
     status: AuthStatus;
     isAuthenticated: boolean;
     login: (email: string, password: string) => Promise<void>;
@@ -29,7 +31,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const loginMutation = useLoginMutation();
     const logoutMutation = useLogoutMutation();
 
-    const user = meQuery.data ?? null;
+
+
+
+    const [user, setUser] = useState<AuthUser | null>(meQuery.data || null);
 
     const status: AuthStatus = meQuery.isPending
         ? "loading"
@@ -41,14 +46,26 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
 
 
+
+
     const login = async (email: string, password: string) => {
-      
-        const result = await loginMutation.mutateAsync({ email, password });
-        await meQuery.refetch();
+        const response = await loginMutation.mutateAsync({ email, password });
+        if (response.data.success) {
+            await meQuery.refetch();
+            window.location.href = "/dashboard";
+        }
     };
 
     const logout = async () => {
-        await logoutMutation.mutateAsync();
+        try {
+            await logoutMutation.mutateAsync();
+            await meQuery.refetch();
+            alert("Logout realizado com sucesso!");
+            window.location.href = "/login";
+        }
+        catch (error) {
+            console.error("Logout failed:", error);
+        }
     };
 
     const refetchUser = async () => {
@@ -59,6 +76,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         <AuthContext.Provider
             value={{
                 user,
+
                 status,
                 isAuthenticated,
                 login,
