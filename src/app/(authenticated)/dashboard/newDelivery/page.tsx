@@ -7,7 +7,7 @@ import { CalendarDays, PackageOpen, UserRound } from "lucide-react"
 import axios from "axios"
 import { Controller, FieldErrors } from "react-hook-form"
 import { toast } from "sonner"
-
+import apiPrivate from "@/lib/apiPrivate"
 import {
     Select,
     SelectContent,
@@ -18,7 +18,6 @@ import {
     SelectValue,
 } from "@/components/ui/select"
 
-import api from "@/lib/apiClient"
 import { useEmployeesQuery } from "@/hooks/useEmployeesQuery"
 import { Button } from "@/components/ui/button"
 import {
@@ -77,13 +76,14 @@ export default function NewDeliveryPage() {
 
 
     async function onSubmit(data: NewDeliveryType) {
+
         try {
-            const response = await api.post("/api/worker/addDelivery", {
-                date: data.date,
+            const response = await apiPrivate.post("/api/worker/addDelivery", {
+                
                 quantity: data.quantity,
                 workerId: data.workerId,
             })
-            console.log("Entrega criada com sucesso:", response)
+            void response
             toast.success("Entrega criada com sucesso")
             form.reset({
                 quantity: 1,
@@ -101,7 +101,7 @@ export default function NewDeliveryPage() {
     }
 
     function onInvalid(errors: FieldErrors<NewDeliveryType>) {
-        console.log("Form data is invalid:", errors)
+        void errors
         toast.error("Revise os campos antes de enviar")
     }
 

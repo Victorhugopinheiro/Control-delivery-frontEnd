@@ -1,5 +1,4 @@
 import axios from 'axios';
-import api from './apiClient';
 
 // 1. Initialize the instance
 const apiPrivate = axios.create({
@@ -15,7 +14,7 @@ const apiPrivate = axios.create({
 let refreshInFlight: Promise<void> | null = null;
 async function refreshToken(): Promise<void> {
     if (!refreshInFlight) {
-        refreshInFlight = api.post('/api/user/refresh')
+        refreshInFlight = apiPrivate.post('/api/user/refresh')
             .then(() => {
             })
             .finally(() => {
@@ -33,7 +32,9 @@ async function refreshToken(): Promise<void> {
 
 apiPrivate.interceptors.response.use(
     (response) => response,
+    
     async (error) => {
+        
         const status = error?.response?.status;
         const original = error?.config;
 
@@ -44,7 +45,7 @@ apiPrivate.interceptors.response.use(
         const isRefreshCall = url.includes("api/user/refresh");
         const alreadyRetried = Boolean(original._retry);
 
-        if (status !== 401 && isRefreshCall && alreadyRetried) {
+        if (status !== 401 || isRefreshCall || alreadyRetried) {
             return Promise.reject(error);
         }
 
@@ -52,9 +53,6 @@ apiPrivate.interceptors.response.use(
             original._retry = true;
             await refreshToken();
             return apiPrivate(original);
-
-
-
 
 
         } catch (refreshError) {

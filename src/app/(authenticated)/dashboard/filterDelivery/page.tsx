@@ -12,7 +12,7 @@ import { CalendarDays, Funnel, PackageOpen, Wallet } from "lucide-react"
 import apiPrivate from "@/lib/apiPrivate"
 import { useEmployeesQuery } from "@/hooks/useEmployeesQuery"
 import {
-    ListWorkerDeliveriesApiResponse,
+    ListWorkerDeliveriesApiResponse2,
     ListWorkerDeliveriesParams,
     WorkerDelivery,
     mapWorkerDeliveriesResponse,
@@ -123,7 +123,7 @@ function buildChartData(deliveries: WorkerDelivery[]): ChartDeliveryPoint[] {
         })
     })
 
-    console.log("bucket", bucket)
+   
 
 
 
@@ -163,7 +163,6 @@ export default function FilterDeliveryPage() {
     ]
 
     const chartData = React.useMemo(() => buildChartData(deliveries), [deliveries])
-    console.log("chartData", chartData, deliveries)
     const totalPackages = deliveries.reduce((acc, item) => acc + item.quantity, 0)
     const totalAmount = deliveries.reduce((acc, item) => acc + item.totalAmount, 0)
     const showQuantityMeasure = measureView === "all" || measureView === "quantity"
@@ -184,7 +183,7 @@ export default function FilterDeliveryPage() {
                 toDate: data.toDate,
             }
 
-            const response = await apiPrivate.get<ListWorkerDeliveriesApiResponse>("/api/worker/workerDelivery", {
+            const response = await apiPrivate.get<ListWorkerDeliveriesApiResponse2>("/api/worker/workerDelivery", {
                 params,
             })
 
@@ -199,7 +198,7 @@ export default function FilterDeliveryPage() {
     }
 
     function onInvalid(errors: FieldErrors<ListWorkerDeliveriesType>) {
-        console.log("Form data is invalid:", errors)
+        void errors
         toast.error("Revise os campos antes de filtrar")
     }
 
@@ -337,7 +336,7 @@ export default function FilterDeliveryPage() {
                             disabled={isLoading}
                         >
                             {isLoading ? "Filtrando entregas..." : "Aplicar filtro"}
-                        </Button>
+                        </Button>filtro
                     </Field>
                 </CardFooter>
             </Card>

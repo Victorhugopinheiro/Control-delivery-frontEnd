@@ -108,6 +108,7 @@ async function hasValidSessionPrivate(): Promise<boolean> {
 
 
   try {
+  
     const response = await apiPrivate.get(requestUrl, {
       headers: {
         Cookie: authCookies,

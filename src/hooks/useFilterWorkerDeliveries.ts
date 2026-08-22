@@ -1,5 +1,5 @@
 import { useQuery, UseQueryResult } from "@tanstack/react-query"
-import apiClient from "@/lib/apiClient"
+import apiPrivate from "@/lib/apiPrivate"
 import {
     ListWorkerDeliveriesApiResponse,
     ListWorkerDeliveriesParams,
@@ -79,7 +79,7 @@ export function useFilterWorkerDeliveries(
     return useQuery({
         queryKey: [...filterWorkerDeliveriesQueryKey, queryParams],
         queryFn: async () => {
-            const result = await apiClient.get<ListWorkerDeliveriesApiResponse>("/api/worker/employeesDelivery", {
+            const result = await apiPrivate.get<ListWorkerDeliveriesApiResponse>("/api/worker/employeesDelivery", {
                 params: queryParams,
             })
 

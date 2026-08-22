@@ -12,6 +12,12 @@ export interface ListWorkerDeliveriesApiResponse {
 }
 
 
+export interface ListWorkerDeliveriesApiResponse2 {
+    deliveries: WorkerDeliveryRaw[]
+}
+
+
+
 
 export interface ListWorkerDeliveriesParams {
     workerId: string
@@ -33,13 +39,13 @@ export interface ListWorkerDeliveriesResponse {
 }
 
 export function mapWorkerDeliveriesResponse(
-    payload: ListWorkerDeliveriesApiResponse,
+    payload: ListWorkerDeliveriesApiResponse2,
 ): ListWorkerDeliveriesResponse {
     return {
-        deliveries: payload.employees.map((delivery) => ({
+        deliveries: payload.deliveries.map((delivery) => ({
             ...delivery,
             createdAt: new Date(delivery.createdAt),
-            date: new Date(delivery.date),
+            date: new Date(delivery.date)
         })),
     }
 }

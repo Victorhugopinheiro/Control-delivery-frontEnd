@@ -21,7 +21,7 @@ import {
 import { Input } from "@/components/ui/input"
 import { WorkerForm, WorkerType } from "../../../../lib/zodTypes/addWorkerZod"
 import { ChangeImage } from "../../_components/changeImage"
-import api from "@/lib/apiClient"
+import api from "@/lib/apiPrivate"
 import { toast } from "sonner"
 import { formatPhone, normalizePhone } from "@/lib/formatPhone"
 
@@ -33,7 +33,7 @@ export default function AddEmployee() {
 
 
     async function onSubmit(data: WorkerType) {
-        alert("Enviando dados do funcionário...")
+     
         if (!image) {
             toast.error("Por favor, selecione uma imagem para o funcionário antes de enviar.")
             return
@@ -53,8 +53,6 @@ export default function AddEmployee() {
 
             const response = await api.post("/api/worker/addWorker", formData)
 
-            console.log("Response from server:", response.data)
-
             toast.success("Funcionário cadastrado com sucesso!")
             form.reset()
             setImage(null)
@@ -67,12 +65,11 @@ export default function AddEmployee() {
     }
 
     function onInvalid(errors: FieldErrors<WorkerType>) {
-        console.log("Form data is invalid:", errors)
-        alert("Por favor, preencha todos os campos corretamente antes de enviar.")
+        void errors
     }
 
     return (
-        <div className="flex flex-col w-full gap-4 p-4">
+        <div className="flex w-full gap-4 p-4">
             <Card className="w-full shadow-lg ">
                 <CardHeader>
                     <CardTitle>Cadastrando novo funcionário</CardTitle>

@@ -3,7 +3,7 @@
 import * as React from "react"
 import { Controller, FieldErrors } from "react-hook-form"
 import { toast } from "sonner"
-import apiClient from "@/lib/apiClient"
+import apiPrivate from "@/lib/apiPrivate"
 import { useEmployeesQuery } from "@/hooks/useEmployeesQuery"
 import { employeesQueryKey } from "@/hooks/useEmployeesQuery"
 import { formatPhone } from "@/lib/formatPhone"
@@ -150,7 +150,7 @@ export default function ManagerProfilesPage() {
 
         try {
 
-            const response = await apiClient.patch(`/api/worker/updateEmployee`, formData)
+            const response = await apiPrivate.patch(`/api/worker/updateEmployee`, formData)
 
             if (response.status === 200) {
 
