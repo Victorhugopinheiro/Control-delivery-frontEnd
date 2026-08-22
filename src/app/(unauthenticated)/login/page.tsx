@@ -1,100 +1,85 @@
 "use client"
 
-
-import * as React from "react"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { Controller, useForm } from "react-hook-form"
+import { Controller } from "react-hook-form"
 import { toast } from "sonner"
-import * as z from "zod"
-import { SignInForm, SignInFormType } from "../../../lib/zodTypes/loginZodForm"
+import { Loader2, Truck } from "lucide-react"
+import { useState } from "react"
+
+import { SignInForm, SignInFormType } from "@/lib/zodTypes/loginZodForm"
 import { Button } from "@/components/ui/button"
 import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
 import {
   Field,
-  FieldDescription,
   FieldError,
   FieldGroup,
   FieldLabel,
 } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
-import {
-  InputGroup,
-  InputGroupAddon,
-  InputGroupText,
-  InputGroupTextarea,
-} from "@/components/ui/input-group"
-import { WorkerForm, WorkerType } from "../../../lib/zodTypes/addWorkerZod"
-
 import { useAuth } from "@/context/authContext"
-import { useState } from "react"
-import { useRouter } from "next/navigation"
 
 export default function Login() {
-
-
-  const router = useRouter()
-  const { login, status } = useAuth()
-  const [email, setEmail] = React.useState("")
-  const [password, setPassword] = useState("")
+  const { login, user, isAuthenticated, status } = useAuth()
   const [submitting, setSubmitting] = useState(false)
-
 
   const form = SignInForm()
 
   async function onSubmit({ email, password }: SignInFormType) {
-
-  
     setSubmitting(true)
 
     try {
+
       await login(email, password)
-      router.replace("/dashboard")
-      toast.success("Login efetuado com sucesso")
+
+      toast.success("Login realizado com sucesso!")
+
+
+
+
     } catch {
-      toast.error("Nao foi possivel autenticar. Verifique suas credenciais.")
+      toast.error("Não foi possível autenticar. Verifique suas credenciais.")
     } finally {
       setSubmitting(false)
     }
   }
 
-
-
-
-
-
   return (
-    <div className="flex flex-col items-center justify-center w-full gap-4 p-4">
-      <Card className="w-full max-w-10/12">
+    <div className="flex min-h-svh w-full flex-col items-center justify-center gap-6 bg-muted/30 p-4 sm:p-6">
+      <div className="flex flex-col items-center gap-2 text-center">
+        <div className="flex size-11 items-center justify-center rounded-xl bg-primary text-primary-foreground">
+          <Truck className="size-6" />
+        </div>
+        <h1 className="font-heading text-xl font-semibold">Delivery</h1>
+      </div>
+
+      <Card className="w-full max-w-sm">
         <CardHeader>
-          <CardTitle>Cadastrando novo funcionário</CardTitle>
+          <CardTitle>Entrar na sua conta</CardTitle>
           <CardDescription>
-            Preencha os campos abaixo para cadastrar um novo funcionário no sistema.
+            Digite seu email e senha para acessar o sistema.
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form id="form-rhf-demo" onSubmit={form.handleSubmit(onSubmit)}>
+          <form id="login-form" onSubmit={form.handleSubmit(onSubmit)}>
             <FieldGroup>
               <Controller
                 name="email"
                 control={form.control}
                 render={({ field, fieldState }) => (
                   <Field data-invalid={fieldState.invalid}>
-                    <FieldLabel htmlFor="form-rhf-demo-title">
-                      Digite seu email
-                    </FieldLabel>
+                    <FieldLabel htmlFor="login-email">Email</FieldLabel>
                     <Input
                       {...field}
-                      id="form-rhf-demo-title"
+                      id="login-email"
+                      type="email"
                       aria-invalid={fieldState.invalid}
-                      placeholder="Digite o seu email"
-                      autoComplete="off"
+                      placeholder="voce@empresa.com"
+                      autoComplete="email"
                     />
                     {fieldState.invalid && (
                       <FieldError errors={[fieldState.error]} />
@@ -107,15 +92,14 @@ export default function Login() {
                 control={form.control}
                 render={({ field, fieldState }) => (
                   <Field data-invalid={fieldState.invalid}>
-                    <FieldLabel htmlFor="form-rhf-demo-title">
-                      Digite sua senha
-                    </FieldLabel>
+                    <FieldLabel htmlFor="login-password">Senha</FieldLabel>
                     <Input
                       {...field}
-                      id="form-rhf-demo-title"
+                      id="login-password"
+                      type="password"
                       aria-invalid={fieldState.invalid}
                       placeholder="Digite sua senha"
-                      autoComplete="off"
+                      autoComplete="current-password"
                     />
                     {fieldState.invalid && (
                       <FieldError errors={[fieldState.error]} />
@@ -124,20 +108,18 @@ export default function Login() {
                 )}
               />
 
-
+              <Button
+                type="submit"
+                form="login-form"
+                className="w-full"
+                disabled={submitting}
+              >
+                {submitting && <Loader2 className="size-4 animate-spin" />}
+                Entrar
+              </Button>
             </FieldGroup>
           </form>
         </CardContent>
-        <CardFooter>
-          <Field orientation="horizontal">
-            <Button type="button" variant="outline" onClick={() => form.reset()}>
-              Reset
-            </Button>
-            <Button type="submit" form="form-rhf-demo">
-              Submit
-            </Button>
-          </Field>
-        </CardFooter>
       </Card>
     </div>
   )
