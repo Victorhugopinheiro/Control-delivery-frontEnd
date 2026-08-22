@@ -33,12 +33,12 @@ export default function Login() {
     setSubmitting(true)
 
     try {
-      console.log("User", user)
-      await login(email, password)
-     
-        toast.success("Login realizado com sucesso!")
 
-     
+      await login(email, password)
+
+      toast.success("Login realizado com sucesso!")
+
+
 
 
     } catch {
