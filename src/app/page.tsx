@@ -1,9 +1,5 @@
-import Image from "next/image";
+import { redirect } from "next/navigation";
 
 export default function Home() {
-  return (
-    <div className=" bg-red-500">
-      <p>Starting my project</p>
-    </div>
-  );
+  redirect("/login");
 }
