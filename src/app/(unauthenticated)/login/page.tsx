@@ -40,7 +40,6 @@ export default function Login() {
 
 
 
-
     } catch {
       toast.error("Não foi possível autenticar. Verifique suas credenciais.")
     } finally {

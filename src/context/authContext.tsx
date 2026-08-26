@@ -3,7 +3,6 @@ import {
     createContext,
     ReactNode,
     useContext,
-    useState,
 } from "react";
 import { useRouter } from "next/navigation";
 import { useLoginMutation, } from "@/hooks/loginHook";
@@ -34,7 +33,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
 
 
-    const [user, setUser] = useState<AuthUser | null>(meQuery.data || null);
+    const user = meQuery.data || null;
 
     const status: AuthStatus = meQuery.isPending
         ? "loading"
@@ -50,15 +49,15 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
     const login = async (email: string, password: string) => {
         const response = await loginMutation.mutateAsync({ email, password });
-        console.log("Login response:", response);
+        if (response.data?.success === false) {
+            throw new Error("Login failed");
+        }
 
-        if (response.data?.success !== false) {
-            try {
-                await meQuery.refetch();
-                router.replace("/dashboard");
-            } catch (error) {
-                console.error("Failed to refresh authenticated user");
-            }
+        try {
+            await meQuery.refetch();
+            router.replace("/dashboard");
+        } catch {
+            console.error("Failed to refresh authenticated user");
         }
     };
 

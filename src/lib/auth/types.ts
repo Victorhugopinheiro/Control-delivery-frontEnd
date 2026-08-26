@@ -14,8 +14,5 @@ export interface LoginPayload {
 
 export interface AuthApiConfig {
   apiBaseUrl: string;
-  loginPath: string;
-  logoutPath: string;
   mePath: string;
-  cookieName: string;
 }

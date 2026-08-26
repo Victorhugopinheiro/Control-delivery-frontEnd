@@ -10,10 +10,7 @@ function normalizeBaseUrl(baseUrl: string | undefined): string {
 
 export const authApiConfig: AuthApiConfig = {
   apiBaseUrl: normalizeBaseUrl(process.env.NEXT_PUBLIC_API_URL),
-  loginPath: process.env.NEXT_PUBLIC_AUTH_LOGIN_PATH ?? "/auth/login",
-  logoutPath: process.env.NEXT_PUBLIC_AUTH_LOGOUT_PATH ?? "/auth/logout",
   mePath: process.env.NEXT_PUBLIC_AUTH_ME_PATH! ,
-  cookieName: process.env.NEXT_PUBLIC_AUTH_COOKIE_NAME ?? "session",
 };
 
 export function buildAuthUrl(path: string): string {

@@ -21,7 +21,7 @@ async function resolveServerBaseUrl(): Promise<string> {
   const protocol = requestHeaders.get("x-forwarded-proto") ?? "http";
 
   if (!host) {
-    return "http://localhost:3000";
+    return authApiConfig.apiBaseUrl;
   }
 
   return `${protocol}://${host}`;
