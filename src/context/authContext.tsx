@@ -3,14 +3,13 @@ import {
     createContext,
     ReactNode,
     useContext,
-    useEffect,
     useState,
 } from "react";
+import { useRouter } from "next/navigation";
 import { useLoginMutation, } from "@/hooks/loginHook";
 import { useLogoutMutation } from "@/hooks/logoutHook";
 import { useMeQuery } from "@/hooks/useMeQuery";
 import { AuthStatus, AuthUser } from "@/lib/auth/types";
-import { useMemo } from "react";
 
 interface AuthContextType {
     user: (AuthUser | null)
@@ -27,6 +26,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
+    const router = useRouter();
     const meQuery = useMeQuery();
     const loginMutation = useLoginMutation();
     const logoutMutation = useLogoutMutation();
@@ -50,9 +50,15 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
     const login = async (email: string, password: string) => {
         const response = await loginMutation.mutateAsync({ email, password });
-        if (response.data.success) {
-            await meQuery.refetch();
-            window.location.href = "/dashboard";
+        console.log("Login response:", response);
+
+        if (response.data?.success !== false) {
+            try {
+                await meQuery.refetch();
+                router.replace("/dashboard");
+            } catch (error) {
+                console.error("Failed to refresh authenticated user");
+            }
         }
     };
 
@@ -60,8 +66,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         try {
             await logoutMutation.mutateAsync();
             await meQuery.refetch();
-            alert("Logout realizado com sucesso!");
-            window.location.href = "/login";
+            router.replace("/login");
         }
         catch (error) {
             console.error("Logout failed:", error);
