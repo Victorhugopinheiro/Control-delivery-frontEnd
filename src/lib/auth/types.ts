@@ -1,10 +1,13 @@
 export type AuthStatus = "loading" | "authenticated" | "unauthenticated";
 
 export interface AuthUser {
-  id: string | number;
   email: string;
   name?: string;
   role?: string;
+}
+
+export interface AuthApiResponse {
+  user: AuthUser;
 }
 
 export interface LoginPayload {
