@@ -35,11 +35,16 @@ const navItems = [
     { href: "/dashboard/filterDelivery", label: "Filtrar entregas", icon: Funnel },
     { href: "/dashboard/addEmployee", label: "Adicionar funcionário", icon: UserPlus },
     { href: "/dashboard/managerProfiles", label: "Perfis de gerentes", icon: UserRoundPen },
+    { href: "/dashboard/employeeMetrics", label: "Perfil do funcionário", icon: Users, role: "employee" },
 ]
 
 export function AppSidebar() {
     const pathname = usePathname()
     const { user, logout } = useAuth()
+
+    console.log(user)
+
+  
 
     return (
         <Sidebar collapsible="icon">
@@ -59,20 +64,41 @@ export function AppSidebar() {
                     <SidebarGroupLabel>Menu</SidebarGroupLabel>
                     <SidebarGroupContent>
                         <SidebarMenu>
-                            {navItems.map(({ href, label, icon: Icon }) => (
-                                <SidebarMenuItem key={href}>
-                                    <SidebarMenuButton
-                                        isActive={pathname === href}
-                                        tooltip={label}
-                                        render={
-                                            <Link href={href}>
-                                                <Icon />
-                                                <span>{label}</span>
-                                            </Link>
-                                        }
-                                    />
-                                </SidebarMenuItem>
-                            ))}
+                            {user?.role === "ADMIN" ? (
+                                navItems.map(({ href, label, icon: Icon }) => (
+                                    <SidebarMenuItem key={href}>
+                                        <SidebarMenuButton
+                                            isActive={pathname === href}
+                                            tooltip={label}
+                                            render={
+                                                <Link href={href}>
+                                                    <Icon />
+                                                    <span>{label}</span>
+                                                </Link>
+                                            }
+                                        />
+                                    </SidebarMenuItem>
+                                ))
+                            ) : (
+                                navItems.filter(({ role }) => role === "employee").map(({ href, label, icon: Icon }) => (
+                                    <SidebarMenuItem key={href}>
+                                        <SidebarMenuButton
+                                            isActive={pathname === href}
+                                            tooltip={label}
+                                            render={
+                                                <Link href={href}>
+                                                    <Icon />
+                                                    <span>{label}</span>
+                                                </Link>
+                                            }
+                                        />
+                                    </SidebarMenuItem>
+                                ))
+                            )
+
+
+
+                            }
                         </SidebarMenu>
                     </SidebarGroupContent>
                 </SidebarGroup>

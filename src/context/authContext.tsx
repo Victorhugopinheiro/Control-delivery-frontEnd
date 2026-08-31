@@ -3,6 +3,8 @@ import {
     createContext,
     ReactNode,
     useContext,
+    useMemo,
+    useState,
 } from "react";
 import { useRouter } from "next/navigation";
 import { useLoginMutation, } from "@/hooks/loginHook";
@@ -11,7 +13,7 @@ import { useMeQuery } from "@/hooks/useMeQuery";
 import { AuthStatus, AuthUser } from "@/lib/auth/types";
 
 interface AuthContextType {
-    user: (AuthUser | null)
+    user: (AuthUser | null);
     status: AuthStatus;
     isAuthenticated: boolean;
     login: (email: string, password: string) => Promise<void>;
@@ -30,10 +32,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const loginMutation = useLoginMutation();
     const logoutMutation = useLogoutMutation();
 
+    const user = useMemo(() => meQuery.data?.user ?? null, [meQuery.data]);
 
 
 
-    const user = meQuery.data || null;
 
     const status: AuthStatus = meQuery.isPending
         ? "loading"
@@ -55,6 +57,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
         try {
             await meQuery.refetch();
+            
             router.replace("/dashboard");
         } catch {
             console.error("Failed to refresh authenticated user");
