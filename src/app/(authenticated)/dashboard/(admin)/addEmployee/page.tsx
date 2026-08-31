@@ -237,7 +237,7 @@ export default function AddEmployee() {
                 <CardFooter>
                     <Field orientation="horizontal">
 
-                        <Button className={"w-full py-4 bg-emerald-600 hover:bg-emerald-700"} type="submit" form="form-rhf-demo">
+                        <Button className={"w-full py-4 bg-[#0077b6] hover:bg-[#03045e]"} type="submit" form="form-rhf-demo">
                             Salvar funcionário
                         </Button>
                     </Field>

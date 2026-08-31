@@ -366,7 +366,7 @@ export default function ManagerProfilesPage() {
                             Recarregar
                         </Button>
                         <Button
-                            className="w-10/12 bg-emerald-600 py-4 hover:bg-emerald-700"
+                            className="w-10/12 bg-[#0077b6] py-4 hover:bg-[#03045e]"
                             type="submit"
                             form="form-manager-profile"
                             disabled={!workerId}
@@ -377,32 +377,32 @@ export default function ManagerProfilesPage() {
                 </CardFooter>
             </Card>
 
-            <Card className="h-fit border-emerald-600/20 bg-emerald-50/30 shadow-sm">
+            <Card className="h-fit border-[#0077b6]/20 bg-[#caf0f8]/30 shadow-sm">
                 <CardHeader>
                     <CardTitle className="text-lg">Resumo do perfil</CardTitle>
                     <CardDescription>Confira quem esta sendo editado antes de salvar.</CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                    <div className="rounded-md border border-emerald-600/20 bg-white p-4">
+                    <div className="rounded-md border border-[#0077b6]/20 bg-white p-4">
                         <p className="text-sm font-medium text-muted-foreground">Funcionario selecionado</p>
                         <p className="mt-1 text-base font-semibold text-foreground">
                             {selectedWorker?.name ?? "Nenhum funcionario selecionado"}
                         </p>
                     </div>
 
-                    <div className="rounded-md border border-emerald-600/20 bg-white p-4">
+                    <div className="rounded-md border border-[#0077b6]/20 bg-white p-4">
                         <p className="text-sm font-medium text-muted-foreground">E-mail atual</p>
                         <p className="mt-1 text-base text-foreground">{selectedWorker?.email ?? "-"}</p>
                     </div>
 
-                    <div className="rounded-md border border-emerald-600/20 bg-white p-4">
+                    <div className="rounded-md border border-[#0077b6]/20 bg-white p-4">
                         <p className="text-sm font-medium text-muted-foreground">Telefone atual</p>
                         <p className="mt-1 text-base text-foreground">
                             {selectedWorker ? formatPhone(selectedWorker.workerProfile?.phone ?? "") || "-" : "-"}
                         </p>
                     </div>
 
-                    <div className="rounded-md border border-emerald-600/20 bg-white p-4">
+                    <div className="rounded-md border border-[#0077b6]/20 bg-white p-4">
                         <p className="text-sm font-medium text-muted-foreground">Endereco atual</p>
                         <p className="mt-1 text-base text-foreground">{selectedWorker?.workerProfile?.address ?? "-"}</p>
                     </div>

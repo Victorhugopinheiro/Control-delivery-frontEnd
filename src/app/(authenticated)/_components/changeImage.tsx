@@ -37,7 +37,7 @@ export function ChangeImage({ setImage, userImage, disabled }: ChangeImageProps)
     return (
         <div className="relative w-40 h-40 md:w-48 md:h-48   ">
 
-            <div className="flex bg-slate-100 rounded-full w-full relative h-full items-center justify-center">
+            <div className="flex bg-muted rounded-full w-full relative h-full items-center justify-center">
 
                 <span className="absolute rounded-full  z-2 cursor-pointer flex items-center justify-center  ">
                     <Upload className=" w-6 h-6 bg-white/20 rounded-full " />

@@ -74,11 +74,11 @@ type MeasureView = "all" | "quantity" | "totalAmount"
 const chartConfig = {
     quantity: {
         label: "Pacotes",
-        color: "#10b981",
+        color: "#0077b6",
     },
     totalAmount: {
         label: "Total (R$)",
-        color: "#059669",
+        color: "#03045e",
     },
 } satisfies ChartConfig
 
@@ -315,7 +315,7 @@ export default function FilterDeliveryPage() {
                         <Button
                             type="button"
                             variant="outline"
-                            className="w-3/12 py-4 hover:bg-emerald-50"
+                            className="w-3/12 py-4 hover:bg-[#caf0f8]"
                             onClick={() => {
                                 form.reset({
                                     workerId: "",
@@ -330,7 +330,7 @@ export default function FilterDeliveryPage() {
                         </Button>
 
                         <Button
-                            className="w-9/12 bg-emerald-600 py-4 text-center hover:bg-emerald-700"
+                            className="w-9/12 bg-[#0077b6] py-4 text-center hover:bg-[#03045e]"
                             type="submit"
                             form="form-filter-delivery"
                             disabled={isLoading}
@@ -341,23 +341,23 @@ export default function FilterDeliveryPage() {
                 </CardFooter>
             </Card>
 
-            <Card className="h-fit border-emerald-600/20 bg-emerald-50/30 shadow-sm">
+            <Card className="h-fit border-[#0077b6]/20 bg-[#caf0f8]/30 shadow-sm">
                 <CardHeader>
                     <CardTitle className="text-lg">Resumo do filtro</CardTitle>
                     <CardDescription>Visao geral dos filtros e totais encontrados.</CardDescription>
                 </CardHeader>
 
                 <CardContent className="space-y-4">
-                    <div className="flex items-center gap-3 rounded-md border border-emerald-600/20 bg-white p-3">
-                        <Funnel className="size-4 text-emerald-700" />
+                    <div className="flex items-center gap-3 rounded-md border border-[#0077b6]/20 bg-white p-3">
+                        <Funnel className="size-4 text-[#03045e]" />
                         <div className="text-sm">
                             <p className="text-muted-foreground">Funcionario</p>
                             <p className="font-medium">{selectedWorker?.name ?? "Nao informado"}</p>
                         </div>
                     </div>
 
-                    <div className="flex items-center gap-3 rounded-md border border-emerald-600/20 bg-white p-3">
-                        <CalendarDays className="size-4 text-emerald-700" />
+                    <div className="flex items-center gap-3 rounded-md border border-[#0077b6]/20 bg-white p-3">
+                        <CalendarDays className="size-4 text-[#03045e]" />
                         <div className="text-sm">
                             <p className="text-muted-foreground">Periodo</p>
                             <p className="font-medium">
@@ -366,16 +366,16 @@ export default function FilterDeliveryPage() {
                         </div>
                     </div>
 
-                    <div className="flex items-center gap-3 rounded-md border border-emerald-600/20 bg-white p-3">
-                        <PackageOpen className="size-4 text-emerald-700" />
+                    <div className="flex items-center gap-3 rounded-md border border-[#0077b6]/20 bg-white p-3">
+                        <PackageOpen className="size-4 text-[#03045e]" />
                         <div className="text-sm">
                             <p className="text-muted-foreground">Pacotes</p>
                             <p className="font-medium">{totalPackages.toLocaleString("pt-BR")}</p>
                         </div>
                     </div>
 
-                    <div className="flex items-center gap-3 rounded-md border border-emerald-600/20 bg-white p-3">
-                        <Wallet className="size-4 text-emerald-700" />
+                    <div className="flex items-center gap-3 rounded-md border border-[#0077b6]/20 bg-white p-3">
+                        <Wallet className="size-4 text-[#03045e]" />
                         <div className="text-sm">
                             <p className="text-muted-foreground">Total recebido</p>
                             <p className="font-medium">{formatMoney(totalAmount)}</p>
@@ -489,7 +489,7 @@ export default function FilterDeliveryPage() {
                             {deliveries.map((delivery) => (
                                 <div
                                     key={delivery.id}
-                                    className="grid gap-2 rounded-lg border border-emerald-600/20 bg-emerald-50/20 p-3 text-sm md:grid-cols-4"
+                                    className="grid gap-2 rounded-lg border border-[#0077b6]/20 bg-[#caf0f8]/20 p-3 text-sm md:grid-cols-4"
                                 >
                                     <div>
                                         <p className="text-muted-foreground">Data da entrega</p>

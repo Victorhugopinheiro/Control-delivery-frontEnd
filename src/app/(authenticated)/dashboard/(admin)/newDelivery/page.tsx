@@ -243,7 +243,7 @@ export default function NewDeliveryPage() {
                         <Button
                             type="button"
                             variant="outline"
-                            className="w-2/12 py-4 hover:bg-emerald-50"
+                            className="w-2/12 py-4 hover:bg-[#caf0f8]"
                             onClick={() =>
                                 form.reset({
                                     quantity: 1,
@@ -257,7 +257,7 @@ export default function NewDeliveryPage() {
                         </Button>
 
                         <Button
-                            className="w-10/12 text-center bg-emerald-600 py-4 hover:bg-emerald-700"
+                            className="w-10/12 text-center bg-[#0077b6] py-4 hover:bg-[#03045e]"
                             type="submit"
                             form="form-new-delivery"
                             disabled={form.formState.isSubmitting}
@@ -268,31 +268,31 @@ export default function NewDeliveryPage() {
                 </CardFooter>
             </Card>
 
-            <Card className="h-fit border-emerald-600/20 bg-emerald-50/30 shadow-sm">
+            <Card className="h-fit border-[#0077b6]/20 bg-[#caf0f8]/30 shadow-sm">
                 <CardHeader>
                     <CardTitle className="text-lg">Resumo da entrega</CardTitle>
                     <CardDescription>Confira os dados antes de salvar.</CardDescription>
                 </CardHeader>
 
                 <CardContent className="space-y-4">
-                    <div className="flex items-center gap-3 rounded-md border border-emerald-600/20 bg-white p-3">
-                        <PackageOpen className="size-4 text-emerald-700" />
+                    <div className="flex items-center gap-3 rounded-md border border-[#0077b6]/20 bg-white p-3">
+                        <PackageOpen className="size-4 text-[#03045e]" />
                         <div className="text-sm">
                             <p className="text-muted-foreground">Quantidade</p>
                             <p className="font-medium">{quantity || 0} pacote(s)</p>
                         </div>
                     </div>
 
-                    <div className="flex items-center gap-3 rounded-md border border-emerald-600/20 bg-white p-3">
-                        <UserRound className="size-4 text-emerald-700" />
+                    <div className="flex items-center gap-3 rounded-md border border-[#0077b6]/20 bg-white p-3">
+                        <UserRound className="size-4 text-[#03045e]" />
                         <div className="text-sm">
                             <p className="text-muted-foreground">Funcionario</p>
                             <p className="font-medium">{selectedWorker?.name ?? "Nao informado"}</p>
                         </div>
                     </div>
 
-                    <div className="flex items-center gap-3 rounded-md border border-emerald-600/20 bg-white p-3">
-                        <CalendarDays className="size-4 text-emerald-700" />
+                    <div className="flex items-center gap-3 rounded-md border border-[#0077b6]/20 bg-white p-3">
+                        <CalendarDays className="size-4 text-[#03045e]" />
                         <div className="text-sm">
                             <p className="text-muted-foreground">Data</p>
                             <p className="font-medium">{date || "Nao informada"}</p>

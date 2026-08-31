@@ -26,7 +26,7 @@ import { useAuth } from "@/context/authContext"
 const chartConfig = {
     value: {
         label: "Pacotes entregues",
-        color: "#67e8f9",
+        color: "#00b4d8",
     },
 } satisfies ChartConfig
 
@@ -108,7 +108,7 @@ export default function DashboardPage() {
         <div className="flex w-full flex-col gap-4 p-4 lg:p-6">
             <section
                 ref={heroRef}
-                className="overflow-hidden rounded-[28px] border border-white/40 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-800 p-6 text-white shadow-2xl shadow-slate-950/30"
+                className="overflow-hidden rounded-[28px] border border-white/40 bg-linear-to-br from-[#03045e] via-[#0077b6] to-[#00b4d8] p-6 text-white shadow-2xl shadow-[#03045e]/30"
             >
                 <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
                     <div className="max-w-2xl space-y-3">
@@ -128,7 +128,7 @@ export default function DashboardPage() {
                     <div className="rounded-2xl border border-white/10 bg-white/10 p-4 backdrop-blur">
                         <p className="text-sm text-slate-300">Meta do mês</p>
                         <p className="text-2xl font-semibold">{completedGoal}%</p>
-                        <p className="text-sm text-emerald-300">{formatCurrency(averagePerWeek * 120)} em média semanal</p>
+                        <p className="text-sm text-[#90e0ef]">{formatCurrency(averagePerWeek * 120)} em média semanal</p>
                     </div>
                 </div>
             </section>
@@ -140,21 +140,21 @@ export default function DashboardPage() {
                         value: isLoading ? "—" : employees.length,
                         description: "Cadastros disponíveis hoje",
                         icon: Users,
-                        accent: "from-cyan-500 to-sky-600",
+                        accent: "from-[#0077b6] to-[#00b4d8]",
                     },
                     {
                         title: "Pacotes no mês",
                         value: isLoading ? "—" : totalPackages,
                         description: `${averagePerWeek} por semana`,
                         icon: PackageCheck,
-                        accent: "from-violet-500 to-fuchsia-600",
+                        accent: "from-[#03045e] to-[#0077b6]",
                     },
                     {
                         title: "Crescimento",
                         value: `${growth}%`,
                         description: "Em relação à primeira semana",
                         icon: ArrowUpRight,
-                        accent: "from-emerald-500 to-lime-600",
+                        accent: "from-[#00b4d8] to-[#90e0ef]",
                     },
                 ].map((item, index) => {
                     const Icon = item.icon
@@ -171,7 +171,7 @@ export default function DashboardPage() {
                                     <CardTitle className="text-sm font-medium text-slate-600">{item.title}</CardTitle>
                                     <CardDescription className="mt-1 text-sm text-slate-500">{item.description}</CardDescription>
                                 </div>
-                                <div className={cn("rounded-2xl bg-gradient-to-br p-2 text-white", item.accent)}>
+                                <div className={cn("rounded-2xl bg-linear-to-br p-2 text-white", item.accent)}>
                                     <Icon className="size-4" />
                                 </div>
                             </CardHeader>
@@ -191,19 +191,19 @@ export default function DashboardPage() {
                                 <CardTitle className="text-xl">Resultados do último mês</CardTitle>
                                 <CardDescription className="mt-1">Acompanhamento visual do avanço semanal.</CardDescription>
                             </div>
-                            <div className="rounded-full bg-emerald-50 px-3 py-1 text-sm font-medium text-emerald-700">
+                            <div className="rounded-full bg-[#caf0f8] px-3 py-1 text-sm font-medium text-[#0077b6]">
                                 +{growth}%
                             </div>
                         </div>
                     </CardHeader>
                     <CardContent>
-                        <div ref={chartRef} className="rounded-3xl border border-slate-200/70 bg-slate-950/95 p-4 text-white">
+                        <div ref={chartRef} className="rounded-3xl border border-slate-200/70 bg-[#03045e]/95 p-4 text-white">
                             <div className="mb-4 flex items-center justify-between">
                                 <div>
                                     <p className="text-sm text-slate-400">Volume semanal</p>
                                     <p className="text-2xl font-semibold">{formatCurrency(totalPackages * 95)}</p>
                                 </div>
-                                <div className="flex items-center gap-2 rounded-full border border-emerald-400/30 bg-emerald-400/10 px-3 py-1 text-sm text-emerald-300">
+                                <div className="flex items-center gap-2 rounded-full border border-[#00b4d8]/30 bg-[#00b4d8]/10 px-3 py-1 text-sm text-[#90e0ef]">
                                     <CircleDollarSign className="size-4" />
                                     Receita estimada
                                 </div>
@@ -213,8 +213,8 @@ export default function DashboardPage() {
                                 <AreaChart data={lastMonthTrend} margin={{ left: 8, right: 8, top: 12, bottom: 0 }}>
                                     <defs>
                                         <linearGradient id="packages-fill" x1="0" y1="0" x2="0" y2="1">
-                                            <stop offset="5%" stopColor="#67e8f9" stopOpacity={0.6} />
-                                            <stop offset="95%" stopColor="#67e8f9" stopOpacity={0.08} />
+                                            <stop offset="5%" stopColor="#00b4d8" stopOpacity={0.6} />
+                                            <stop offset="95%" stopColor="#00b4d8" stopOpacity={0.08} />
                                         </linearGradient>
                                     </defs>
                                     <CartesianGrid vertical={false} stroke="rgba(148,163,184,0.18)" strokeDasharray="4 4" />
@@ -232,16 +232,16 @@ export default function DashboardPage() {
                                         tick={{ fill: "#cbd5e1", fontSize: 12 }}
                                     />
                                     <ChartTooltip
-                                        cursor={{ stroke: "rgba(103, 232, 249, 0.35)", strokeWidth: 1 }}
-                                        content={<ChartTooltipContent className="bg-slate-900 text-slate-50" formatter={(value) => [`${value} pacotes`, "Entregues"]} />}
+                                        cursor={{ stroke: "rgba(0, 180, 216, 0.35)", strokeWidth: 1 }}
+                                        content={<ChartTooltipContent className="bg-[#03045e] text-slate-50" formatter={(value) => [`${value} pacotes`, "Entregues"]} />}
                                     />
                                     <Area
                                         type="monotone"
                                         dataKey="value"
-                                        stroke="#67e8f9"
+                                        stroke="#00b4d8"
                                         strokeWidth={3}
                                         fill="url(#packages-fill)"
-                                        activeDot={{ r: 6, fill: "#67e8f9", stroke: "#082f49", strokeWidth: 2 }}
+                                        activeDot={{ r: 6, fill: "#00b4d8", stroke: "#03045e", strokeWidth: 2 }}
                                     />
                                 </AreaChart>
                             </ChartContainer>
@@ -293,7 +293,7 @@ export default function DashboardPage() {
                                                         className="h-14 w-14 rounded-full border-4 border-white object-cover shadow-lg shadow-slate-200"
                                                     />
                                                 ) : (
-                                                    <div className="flex h-14 w-14 items-center justify-center rounded-full border-4 border-white bg-linear-to-br from-cyan-500 to-violet-500 font-semibold text-white shadow-lg shadow-slate-200">
+                                                    <div className="flex h-14 w-14 items-center justify-center rounded-full border-4 border-white bg-linear-to-br from-[#0077b6] to-[#00b4d8] font-semibold text-white shadow-lg shadow-slate-200">
                                                         {initials}
                                                     </div>
                                                 )}
